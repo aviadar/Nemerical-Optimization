@@ -146,7 +146,7 @@ class ConstrainedQuadraticFunction(BaseLineSearchFunction):
     ## x0+x1+x2=1 ##
     @property
     def A(self):
-        return np.array([1, 1, 1])
+        return np.array([1, 1, 1]).reshape(1, -1)
 
     @property
     def b(self):

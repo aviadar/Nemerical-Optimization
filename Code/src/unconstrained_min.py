@@ -16,6 +16,8 @@ def line_search(f, x0, obj_tol, param_tol, max_iter, dir_selection_method='gd', 
             pk = -f.evaluate_grad(prev_x)
         elif dir_selection_method == 'nt':
             pk = newton_dir(f, prev_x)
+        elif dir_selection_method == 'nt_equality':
+            pk = newton_equality_const_dir(f, prev_x)
         elif dir_selection_method == 'bfgs':
             if first_iteration:
                 pk, Bk = bfgs_dir(f, x_hist, None, None, first_iteration)
@@ -57,6 +59,14 @@ def bfgs_dir(f, xk_1, xk, Bk, first_iteration):
 def newton_dir(f, x):
     """ hessian """
     return -mat_inv(f.evaluate_hess(x)) @ f.evaluate_grad(x)
+
+
+def newton_equality_const_dir(f, x):
+    tmp1 = np.vstack([np.hstack([f.evaluate_hess(x), f.A.T]),
+                      np.hstack([f.A, np.zeros((1, f.A.shape[0]))])])
+    tmp2 = np.vstack([-f.evaluate_grad(x), np.zeros((1, f.A.shape[0]))])
+    res = np.linalg.solve(tmp1, tmp2)
+    return res[:f.A.shape[1]]
 
 
 def mat_inv(A):
