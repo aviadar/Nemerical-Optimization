@@ -1,8 +1,8 @@
 import numpy as np
 import unittest
-from src.unconstrained_min import line_search
-from tests.examples import Q1_quad, Q2_quad, Q3_quad, QuadraticFunction, RosenbrockFunction
-from src.utils import final_report, plot_contours_paths, plot_val_hist
+from Code.src.unconstrained_min import line_search
+from Code.tests.examples import Q1_quad, Q2_quad, Q3_quad, QuadraticFunction, RosenbrockFunction
+from Code.src.utils import final_report, plot_contours_paths, plot_val_hist
 
 
 class TestStringMethods(unittest.TestCase):
