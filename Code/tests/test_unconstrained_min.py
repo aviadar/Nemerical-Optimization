@@ -5,7 +5,7 @@ from Code.tests.examples import Q1_quad, Q2_quad, Q3_quad, QuadraticFunction, Ro
 from Code.src.utils import final_report, plot_contours_paths, plot_val_hist
 
 
-class TestStringMethods(unittest.TestCase):
+class TestUnconstrainedMin(unittest.TestCase):
 
     def test_quad_min_gd(self):
         x0 = np.array([[1], [1]])
