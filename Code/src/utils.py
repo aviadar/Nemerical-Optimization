@@ -78,7 +78,7 @@ def plot_qp(f, x_hist):
     ax.contour3D(X, Y, C, 50)
 
     ax.scatter(x_hist[0, :], x_hist[1, :], x_hist[2, :], label='path')
-    ax.scatter(x_hist[0, -1], x_hist[1, -1], x_hist[2, -1], marker='s', label='final x')
+    ax.scatter(x_hist[0, -1], x_hist[1, -1], x_hist[2, -1], s=30, marker='^', label='final x')
 
     # fig = plt.figure()
     # ax = plt.axes(projection='3d')

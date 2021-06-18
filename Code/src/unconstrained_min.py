@@ -28,7 +28,7 @@ def line_search(f, x0, obj_tol, param_tol, max_iter, dir_selection_method='gd', 
             raise Exception("dir_selection_method = [‘gd’, ‘nt’, ‘bfgs’] only!")
 
         step_size = get_step_size_wolfe(f, prev_x, pk, init_step_len, slope_ratio, back_track_factor)
-        new_x = prev_x + step_size * pk
+        new_x = prev_x + step_size * pk.reshape(prev_x.shape)
         x_hist = np.append(x_hist, new_x, axis=1)
 
         new_val = f.evaluate(new_x)
@@ -76,7 +76,7 @@ def mat_inv(A):
 def get_step_size_wolfe(f, xk, pk, init_step_len, slope_ratio, back_track_factor):
     alpha = init_step_len
     for i in range(50):
-        if f.evaluate(xk + alpha * pk) <= (f.evaluate(xk) + slope_ratio * alpha * f.evaluate_grad(xk).T @ pk):
+        if f.evaluate(xk + alpha * pk.reshape(xk.shape)) <= (f.evaluate(xk) + slope_ratio * alpha * f.evaluate_grad(xk).T @ pk):
             return alpha
         else:
             alpha *= back_track_factor

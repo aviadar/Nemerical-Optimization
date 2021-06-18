@@ -86,7 +86,7 @@ class QP_f0(BaseLineSearchFunction):
 
 
 class QP_f1(BaseLineSearchFunction):
-    def __init__(self, t=1.0):
+    def __init__(self):
         pass
 
     ## f1 = x0
@@ -103,7 +103,7 @@ class QP_f1(BaseLineSearchFunction):
 
 
 class QP_f2(BaseLineSearchFunction):
-    def __init__(self, t=1.0):
+    def __init__(self):
         pass
 
     ## f2 = x1
@@ -120,7 +120,7 @@ class QP_f2(BaseLineSearchFunction):
 
 
 class QP_f3(BaseLineSearchFunction):
-    def __init__(self, t=1.0):
+    def __init__(self):
         pass
 
     ## f3 = x2
@@ -155,6 +155,136 @@ class ConstrainedQuadraticFunction(BaseLineSearchFunction):
     @property
     def inequality_constraints(self):
         return [self.f1, self.f2, self.f3]
+
+    def evaluate(self, x):
+        ret_val = self.f0.evaluate(x)
+        for fi in self.inequality_constraints:
+            ret_val -= fi.evaluate(x)
+
+        return ret_val
+
+    def evaluate_grad(self, x):
+        ret_val = self.f0.evaluate_grad(x)
+        for fi in self.inequality_constraints:
+            ret_val -= fi.evaluate_grad(x)
+
+        return ret_val
+
+    def evaluate_hess(self, x):
+        ret_val = self.f0.evaluate_hess(x)
+        for fi in self.inequality_constraints:
+            ret_val -= fi.evaluate_hess(x)
+
+        return ret_val
+
+
+class LP_f0(BaseLineSearchFunction):
+    def __init__(self, t=1.0):
+        self.t = t
+
+    @property
+    def t(self):
+        return self._t
+
+    @t.setter
+    def t(self, value):
+        self._t = value
+
+    ## f0 = -x0-x1 ##
+    def evaluate(self, x):
+        return -x.sum() * self.t
+
+    def evaluate_grad(self, x):
+        return -np.ones(2) * self.t
+
+    def evaluate_hess(self, x=None):
+        return np.zeros((2, 2)) * self.t
+
+class LP_f1(BaseLineSearchFunction):
+    def __init__(self):
+        pass
+
+    ## f1 = x0+x1-1
+    def evaluate(self, x):
+        return np.log(x.sum()-1)
+
+    def evaluate_grad(self, x):
+        return np.ones(2)/(x.sum()-1)
+
+    def evaluate_hess(self, x):
+        return -np.ones((2, 2))/(x.sum()-1)**2
+
+
+class LP_f2(BaseLineSearchFunction):
+    def __init__(self):
+        pass
+
+    ## f2 = 1-x1
+    def evaluate(self, x):
+        return np.log(1 - x[1])
+
+    def evaluate_grad(self, x):
+        return np.array([np.array([0]), -1 / (1 - x[1])]).reshape(2,)
+
+    def evaluate_hess(self, x):
+        hess = np.zeros((2, 2))
+        hess[1, 1] = -1 / (1 - x[1]) ** 2
+        return hess
+
+
+class LP_f3(BaseLineSearchFunction):
+    def __init__(self):
+        pass
+
+    ## f3 = 2-x0
+    def evaluate(self, x):
+        return np.log(2 - x[0])
+
+    def evaluate_grad(self, x):
+        return np.array([-1 / (2 - x[0]), np.array([0])]).reshape(2,)
+
+    def evaluate_hess(self, x):
+        hess = np.zeros((2, 2))
+        hess[0, 0] = -1 / (2 - x[0]) ** 2
+        return hess
+
+class LP_f4(BaseLineSearchFunction):
+    def __init__(self):
+        pass
+
+    ## f4 = x1
+    def evaluate(self, x):
+        return np.log(x[1])
+
+    def evaluate_grad(self, x):
+        return np.array([np.array([0]), 1 / x[1]]).reshape(2,)
+
+    def evaluate_hess(self, x):
+        hess = np.zeros((2, 2))
+        hess[1, 1] = -1 / x[1] ** 2
+        return hess
+
+
+class ConstrainedLPFunction(BaseLineSearchFunction):
+    def __init__(self):
+        self.f0 = LP_f0()
+        self.f1 = LP_f1()
+        self.f2 = LP_f2()
+        self.f3 = LP_f3()
+        self.f4 = LP_f4()
+
+    ## x0+x1+x2=1 ##
+    @property
+    def A(self):
+        return None
+
+    @property
+    def b(self):
+        return None
+
+    @property
+    def inequality_constraints(self):
+        return [self.f1, self.f2, self.f3, self.f4]
 
     def evaluate(self, x):
         ret_val = self.f0.evaluate(x)

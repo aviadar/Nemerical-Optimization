@@ -10,10 +10,14 @@ def interior_pt(func, x0, obj_tol, param_tol, max_inner_loops,
     success = False
 
     m = float(len(func.inequality_constraints))
+    if func.A is None:
+        dir_selection_method = 'nt'
+    else:
+        dir_selection_method = 'nt_equality'
+
     for iteration in range(max_outer_loops):
         func.f0.t = t
 
-        dir_selection_method = 'nt_equality'
         _, last_x, _, x_hist_temp = line_search(func, new_x, obj_tol, param_tol, max_inner_loops,
                                                         dir_selection_method)
 
