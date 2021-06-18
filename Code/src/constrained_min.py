@@ -14,10 +14,10 @@ def interior_pt(func, x0, obj_tol, param_tol, max_inner_loops,
         func.f0.t = t
 
         dir_selection_method = 'nt_equality'
-        _, last_x, val_hist_temp, x_hist_temp = line_search(func, new_x, obj_tol, param_tol, max_inner_loops,
+        _, last_x, _, x_hist_temp = line_search(func, new_x, obj_tol, param_tol, max_inner_loops,
                                                         dir_selection_method)
 
-        val_hist.append(val_hist_temp)
+        # val_hist.append(val_hist_temp)
         if x_hist is None:
             x_hist = x_hist_temp
         else:
@@ -29,5 +29,8 @@ def interior_pt(func, x0, obj_tol, param_tol, max_inner_loops,
 
         new_x = last_x
         t *= mu
+
+    func.f0.t = 1.0
+    val_hist = [func.f0.evaluate(x) for x in x_hist.T]
 
     return success, last_x, val_hist, x_hist

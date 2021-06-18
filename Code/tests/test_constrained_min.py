@@ -3,7 +3,7 @@ import unittest
 from Code.src.constrained_min import interior_pt
 from Code.src.unconstrained_min import line_search
 from Code.tests.examples import ConstrainedQuadraticFunction
-from Code.src.utils import final_report, plot_contours_paths, plot_val_hist
+from Code.src.utils import final_report, plot_contours_paths, plot_val_hist, plot_qp
 
 
 class TestConstrainedMin(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestConstrainedMin(unittest.TestCase):
         success, last_x, val_hist, x_hist = interior_pt(func=constrained_qp, x0=x0, obj_tol=obj_tol,
                                                         param_tol=param_tol, max_inner_loops=max_inner_loops)
 
-
+        plot_qp(constrained_qp.f0, x_hist)
 
 
 if __name__ == '__main__':
