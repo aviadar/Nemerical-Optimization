@@ -26,19 +26,19 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'GD 1st Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_1, x_hist)
+        plot_contours_paths(f_quad_1, x_hist, 'GD 1st Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_2, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'GD 2nd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_2, x_hist)
+        plot_contours_paths(f_quad_2, x_hist, 'GD 2nd Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_3, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'GD 3rd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_3, x_hist)
+        plot_contours_paths(f_quad_3, x_hist, 'GD 3rd Qaudratic Convergence')
 
     def test_quad_min_nt(self):
         x0 = np.array([[1], [1]])
@@ -58,19 +58,19 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'NT 1st Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_1, x_hist)
+        plot_contours_paths(f_quad_1, x_hist, 'NT 1st Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_2, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'NT 2nd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_2, x_hist)
+        plot_contours_paths(f_quad_2, x_hist, 'NT 2nd Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_3, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'NT 3rd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_3, x_hist)
+        plot_contours_paths(f_quad_3, x_hist, 'NT 3rd Qaudratic Convergence')
 
     def test_quad_min_bfgs(self):
         x0 = np.array([[1], [1]])
@@ -90,25 +90,25 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'BFGS 1st Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_1, x_hist)
+        plot_contours_paths(f_quad_1, x_hist, 'BFGS 1st Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_2, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'BFGS 2nd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_2, x_hist)
+        plot_contours_paths(f_quad_2, x_hist, 'BFGS 2nd Qaudratic Convergence')
 
         success, last_x, val_hist, x_hist = line_search(f_quad_3, x0, obj_tol, param_tol, max_iter,
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'BFGS 3rd Qaudratic objective function vs. iterations')
-        plot_contours_paths(f_quad_3, x_hist)
+        plot_contours_paths(f_quad_3, x_hist, 'BFGS 3rd Qaudratic Convergence')
 
     def test_rosenbrock_min_gd(self):
 
         x0 = np.array([[2], [2]])
-        obj_tol = 10e-7
-        param_tol = 10e-8
+        obj_tol = 10e-9
+        param_tol = 10e-9
         max_iter = 10000
 
         f_rosenbrock = RosenbrockFunction()
@@ -118,7 +118,7 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'GD rosenbrock objective function vs. iterations')
-        plot_contours_paths(f_rosenbrock, x_hist)
+        plot_contours_paths(f_rosenbrock, x_hist, 'GD rosenbrock Convergence')
 
     def test_rosenbrock_min_nt(self):
         x0 = np.array([[2], [2]])
@@ -133,7 +133,7 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'NT rosenbrock objective function vs. iterations')
-        plot_contours_paths(f_rosenbrock, x_hist)
+        plot_contours_paths(f_rosenbrock, x_hist, 'NT rosenbrock Convergence')
 
     def test_rosenbrock_min_bfgs(self):
         x0 = np.array([[2], [2]])
@@ -148,7 +148,7 @@ class TestUnconstrainedMin(unittest.TestCase):
                                                         dir_selection_method)
         final_report(success, last_x)
         plot_val_hist(val_hist, 'BFGS rosenbrock objective function vs. iterations')
-        plot_contours_paths(f_rosenbrock, x_hist)
+        plot_contours_paths(f_rosenbrock, x_hist, 'BFGS rosenbrock Convergence')
 
 
 if __name__ == '__main__':

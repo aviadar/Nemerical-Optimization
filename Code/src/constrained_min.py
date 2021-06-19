@@ -4,7 +4,6 @@ from Code.src.unconstrained_min import line_search
 
 def interior_pt(func, x0, obj_tol, param_tol, max_inner_loops,
                 t=1.0, mu=10.0, epsilon=1e-6, max_outer_loops=100):
-    val_hist = []
     x_hist = None
     new_x = x0.copy()
     success = False

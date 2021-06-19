@@ -23,7 +23,11 @@ def plot_val_hist(val_hist, title):
     plt.show()
 
 
-def plot_contours_paths(f, x_hist):
+def plot_contours_paths(f, x_hist, title):
+    fig = plt.figure()
+    fig.suptitle(title)
+    ax = fig.add_subplot(1, 2, 1, projection='3d')
+
     x1 = np.linspace(-3, 3, 1000)
     x2 = np.linspace(-8, 3, 1000)
     X, Y = np.meshgrid(x1, x2)
@@ -32,8 +36,6 @@ def plot_contours_paths(f, x_hist):
         for j in range(X.shape[1]):
             Z[i, j] = f.evaluate(np.array([[X[i, j]], [Y[i, j]]]))
 
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
     ax.contour3D(X, Y, Z, 50)
 
     x1_hist = []
@@ -45,20 +47,22 @@ def plot_contours_paths(f, x_hist):
         x2_hist.append(x[1])
         z_hist.append(fx)
 
-    ax.plot(x1_hist, x2_hist, z_hist, 'o', markersize=12, label='path')
-    ax.set_xlabel('x1')
-    ax.set_ylabel('x2')
+    ax.plot(x1_hist, x2_hist, z_hist, '-o', label='path')
+    ax.plot(x1_hist[-1], x2_hist[-1], z_hist[-1], marker='^', markerfacecolor='yellow', markersize=12, label='final x')
+
+    ax.set_xlabel('x0')
+    ax.set_ylabel('x1')
     ax.set_zlabel('f(x)')
     ax.legend()
-    colors = cm.Pastel1(range(x_hist.shape[1]))
-    fig, ax1 = plt.subplots()
+
+    ax1 = fig.add_subplot(1, 2, 2)
     CS = ax1.contour(X, Y, Z, 30)
     ax1.clabel(CS, inline=True, fontsize=10)
-    for iteration, x in enumerate(x_hist.T):
-        ax1.plot(x[0], x[1], 'o', color=colors[iteration], label='path' + str(iteration))
+    ax1.plot(x1_hist, x2_hist, '-o', label='path')
+    ax1.plot(x1_hist[-1], x2_hist[-1], marker='^', markerfacecolor='yellow', markersize=12, label='final x')
 
-    plt.xlabel('x1')
-    plt.ylabel('x2')
+    plt.xlabel('x0')
+    plt.ylabel('x1')
     ax1.legend()
 
     plt.show()
