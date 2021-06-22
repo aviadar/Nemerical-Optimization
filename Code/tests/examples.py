@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 Q1_quad = np.array([[1, 0], [0, 1]])
 Q2_quad = np.array([[5, 0], [0, 1]])
-Q3_quad = Q = np.array([[np.sqrt(3) / 2, -0.5], [0.5, np.sqrt(3) / 2]]).transpose() @ np.array(
+Q3_quad = np.array([[np.sqrt(3) / 2, -0.5], [0.5, np.sqrt(3) / 2]]).transpose() @ np.array(
     [[5, 0], [0, 1]]) @ np.array(
     [[np.sqrt(3) / 2, -0.5], [0.5, np.sqrt(3) / 2]])
 
